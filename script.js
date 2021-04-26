@@ -91,14 +91,15 @@ let createTask = (color, task) => {
   newtaskContainer.innerHTML = `<div class="task-color ${color}"></div>    
   <div class="task-id">random id</div>
   <div class="task-value">${task}</div>`;
-
-  container.appendChild(newtaskContainer);
-  let taskColorBands = document.querySelectorAll(".task-color");
+  
+  // let taskColorBand = document.querySelector(".task-color");
+  // console.log();
   
   // SWITCHING COLOR OF TASK BANDS
-  for(let k=0;k<taskColorBands.length;k++){
-    addColorSwitch(taskColorBands[k]);
-  }
+  addColorSwitch(newtaskContainer.childNodes[0]);
+
+  container.appendChild(newtaskContainer);
+  
   
 };
 
@@ -108,13 +109,14 @@ let addColorSwitch = (taskColorBand) =>{
   taskColorBand.addEventListener("click", (e) => {
     let colors = ["pink", "blue", "green", "black"];
     let currentColor = taskColorBand.classList[1];
-    let idx;
+    let idx = 0;
     for (let i = 0; i < colors.length; i++) {
       if (colors[i] === currentColor) {
         idx = i;
         break;
       }
     }
+    console.log(currentColor, idx);
     if (idx + 1 < colors.length) {
       taskColorBand.setAttribute("class", `task-color ${colors[idx+1]}`);
     } else {
