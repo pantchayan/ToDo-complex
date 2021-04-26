@@ -1,5 +1,7 @@
 let colorbtns = document.querySelector(".color-btns");
+let container = document.querySelector(".container");
 let plusBtn = document.querySelector(".plus");
+
 let body = document.body;
 
 colorbtns.addEventListener("click", (e) => {
@@ -12,7 +14,6 @@ colorbtns.addEventListener("click", (e) => {
     color = e.path[0].childNodes[1].classList[1];
   }
 
-  let container = document.querySelector(".container");
   container.setAttribute("class", `container ${color}`);
 });
 
@@ -34,18 +35,18 @@ let modalTemplate = `<div class="modal-input">
 plusBtn.addEventListener("click", (e) => {
   // e.preventDefault();
   console.log("plus is clicked");
+  let modal;
   if (!document.querySelector(".modal")) {
-    let modal = document.createElement("div");
+    modal = document.createElement("div");
     modal.setAttribute("class", "modal");
     modal.innerHTML = modalTemplate;
     body.appendChild(modal);
   }
-  handleModal();
+  handleModal(modal);
 });
 
-let handleModal = () => {
-
-  // Setting color
+let handleModal = (modal) => {
+  // Setting color in modal
   let selectedColor;
   let modalColorBtns = document.querySelector(".modal-colors");
 
@@ -61,10 +62,66 @@ let handleModal = () => {
       e.target.classList.add("btn-border");
     }
   });
+  // Get text value from modal
+  let textArea = document.querySelector("#task-input");
+  let task;
 
-  // Get text value
+  textArea.addEventListener("keydown", (e) => {
+    if (e.key == "Enter" && textArea.value != "") {
+      task = textArea.value;
+      console.log(selectedColor, task);
+      if (selectedColor) {
+        if (modal) {
+          modal.remove();
+        }
 
+        // call to make a new task
+        createTask(selectedColor, task);
+      } else {
+        alert("Choose a color!");
+      }
+    }
+  });
+};
 
+let createTask = (color, task) => {
+  let newtaskContainer = document.createElement("div");
+  newtaskContainer.setAttribute("class", "task-container");
+
+  newtaskContainer.innerHTML = `<div class="task-color ${color}"></div>    
+  <div class="task-id">random id</div>
+  <div class="task-value">${task}</div>`;
+
+  container.appendChild(newtaskContainer);
+  let taskColorBands = document.querySelectorAll(".task-color");
   
+  // SWITCHING COLOR OF TASK BANDS
+  for(let k=0;k<taskColorBands.length;k++){
+    addColorSwitch(taskColorBands[k]);
+  }
+  
+};
 
-}
+
+// SWITCHING COLOR OF A SINGLE TASK BAND
+let addColorSwitch = (taskColorBand) =>{
+  taskColorBand.addEventListener("click", (e) => {
+    let colors = ["pink", "blue", "green", "black"];
+    let currentColor = taskColorBand.classList[1];
+    let idx;
+    for (let i = 0; i < colors.length; i++) {
+      if (colors[i] === currentColor) {
+        idx = i;
+        break;
+      }
+    }
+    if (idx + 1 < colors.length) {
+      taskColorBand.setAttribute("class", `task-color ${colors[idx+1]}`);
+    } else {
+      taskColorBand.setAttribute("class", `task-color ${colors[0]}`);
+    }
+  });
+} 
+
+
+

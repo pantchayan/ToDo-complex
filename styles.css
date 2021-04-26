@@ -4,6 +4,7 @@
 
 body{
        margin:0;
+       background-color: #b8b8b8;
 }
 
 
@@ -62,10 +63,46 @@ body{
        font-size: 1.75rem;
 }
 
+/* CONTAINER */
 .container{
-       height:100px;
+       height:100vh;
+       padding-left: 3rem;
+       
+       display: flex;
+       justify-content: space-evenly;
+       flex-wrap: wrap;
 }
 
+/* TASK CONTAINER CSS */
+.task-container{
+       background-color: #fff;
+       height: 12rem;
+       width: 20rem;
+       margin-top: 3rem;
+}
+
+.task-color{
+       height: 8%;
+}
+
+.task-id{
+       padding-left: 1rem;
+       padding-top: 0.5rem;
+       font-size: 1.5rem;
+       font-weight: 800;
+       color:#807f7f;
+
+}
+
+.task-value{
+       padding-left: 1rem;
+       padding-top: 0.5rem;
+       font-size: 1.3rem;
+       font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* MODAL CSS */
 .modal{
        position:absolute;
        display: flex;
