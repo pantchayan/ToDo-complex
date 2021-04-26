@@ -1,6 +1,7 @@
 let colorbtns = document.querySelector(".color-btns");
 let container = document.querySelector(".container");
 let plusBtn = document.querySelector(".plus");
+let multBtn = document.querySelector(".fa-times");
 
 let body = document.body;
 
@@ -35,6 +36,7 @@ let modalTemplate = `<div class="modal-input">
 plusBtn.addEventListener("click", (e) => {
   // e.preventDefault();
   console.log("plus is clicked");
+  plusBtn.classList.add("clicked");
   let modal;
   if (!document.querySelector(".modal")) {
     modal = document.createElement("div");
@@ -58,7 +60,6 @@ let handleModal = (modal) => {
     }
     if (e.target.classList[1]) {
       selectedColor = e.target.classList[1];
-      console.log(selectedColor);
       e.target.classList.add("btn-border");
     }
   });
@@ -69,7 +70,6 @@ let handleModal = (modal) => {
   textArea.addEventListener("keydown", (e) => {
     if (e.key == "Enter" && textArea.value != "") {
       task = textArea.value;
-      console.log(selectedColor, task);
       if (selectedColor) {
         if (modal) {
           modal.remove();
@@ -91,21 +91,18 @@ let createTask = (color, task) => {
   newtaskContainer.innerHTML = `<div class="task-color ${color}"></div>    
   <div class="task-id">random id</div>
   <div class="task-value">${task}</div>`;
-  
+
   // let taskColorBand = document.querySelector(".task-color");
   // console.log();
-  
+
   // SWITCHING COLOR OF TASK BANDS
   addColorSwitch(newtaskContainer.childNodes[0]);
-
+  plusBtn.classList.remove("clicked");
   container.appendChild(newtaskContainer);
-  
-  
 };
 
-
 // SWITCHING COLOR OF A SINGLE TASK BAND
-let addColorSwitch = (taskColorBand) =>{
+let addColorSwitch = (taskColorBand) => {
   taskColorBand.addEventListener("click", (e) => {
     let colors = ["pink", "blue", "green", "black"];
     let currentColor = taskColorBand.classList[1];
@@ -118,12 +115,9 @@ let addColorSwitch = (taskColorBand) =>{
     }
     console.log(currentColor, idx);
     if (idx + 1 < colors.length) {
-      taskColorBand.setAttribute("class", `task-color ${colors[idx+1]}`);
+      taskColorBand.setAttribute("class", `task-color ${colors[idx + 1]}`);
     } else {
       taskColorBand.setAttribute("class", `task-color ${colors[0]}`);
     }
   });
-} 
-
-
-
+};

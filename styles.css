@@ -68,6 +68,11 @@ body {
 .operator-btn:hover {
   cursor: pointer;
 }
+
+.clicked{
+  background-color: #1b1b1b;
+}
+
 /* CONTAINER */
 .container {
   height: 100vh;
@@ -157,6 +162,6 @@ body {
 }
 
 .btn-border {
-  border: 7px solid rgb(73, 69, 69); 
+  border: 6px solid rgb(179, 177, 177); 
   opacity: 1;
 }
