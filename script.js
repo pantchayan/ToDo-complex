@@ -2,8 +2,17 @@ let colorbtns = document.querySelector(".color-btns");
 let container = document.querySelector(".container");
 let plusBtn = document.querySelector(".plus");
 let multBtn = document.querySelector(".fa-times");
-
-let body = document.body;
+let deleteState = false;
+let body = document.querySelector("body");
+multBtn.addEventListener("click", (e) => {
+  let parent = e.currentTarget.parentNode;
+  if (deleteState == false) {
+    parent.classList.add("clicked");
+  } else {
+    parent.classList.remove("clicked");
+  }
+  deleteState = !deleteState;
+});
 
 colorbtns.addEventListener("click", (e) => {
   e.preventDefault();
@@ -14,7 +23,9 @@ colorbtns.addEventListener("click", (e) => {
   if (!color) {
     color = e.path[0].childNodes[1].classList[1];
   }
+  // e.path[1].classList.add('clicked');
 
+  // console.log(e.path[1]);
   container.setAttribute("class", `container ${color}`);
 });
 
@@ -43,8 +54,9 @@ plusBtn.addEventListener("click", (e) => {
     modal.setAttribute("class", "modal");
     modal.innerHTML = modalTemplate;
     body.appendChild(modal);
+
+    handleModal(modal);
   }
-  handleModal(modal);
 });
 
 let handleModal = (modal) => {
@@ -88,17 +100,21 @@ let createTask = (color, task) => {
   let newtaskContainer = document.createElement("div");
   newtaskContainer.setAttribute("class", "task-container");
 
+  let uid = new ShortUniqueId();
   newtaskContainer.innerHTML = `<div class="task-color ${color}"></div>    
-  <div class="task-id">random id</div>
-  <div class="task-value">${task}</div>`;
+  <div class="task-id">#${uid()}</div>
+  <div class="task-value" contenteditable="true">${task}</div>`;
 
   // let taskColorBand = document.querySelector(".task-color");
   // console.log();
 
-  // SWITCHING COLOR OF TASK BANDS
-  addColorSwitch(newtaskContainer.childNodes[0]);
   plusBtn.classList.remove("clicked");
   container.appendChild(newtaskContainer);
+
+  // SWITCHING COLOR OF TASK BANDS
+  addColorSwitch(newtaskContainer.childNodes[0]);
+  // DELETING THE TASK
+  newtaskContainer.addEventListener("click", deleteTask);
 };
 
 // SWITCHING COLOR OF A SINGLE TASK BAND
@@ -120,4 +136,11 @@ let addColorSwitch = (taskColorBand) => {
       taskColorBand.setAttribute("class", `task-color ${colors[0]}`);
     }
   });
+};
+
+let deleteTask = (e) => {
+  let task = e.currentTarget;
+  if (deleteState) {
+    task.remove();
+  }
 };

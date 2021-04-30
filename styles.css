@@ -89,6 +89,8 @@ body {
   height: 12rem;
   width: 20rem;
   margin-top: 3rem;
+  
+  overflow-y: auto;
 }
 
 .task-color {
@@ -101,15 +103,18 @@ body {
 .task-id {
   padding-left: 1rem;
   padding-top: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #807f7f;
+  font-size: 1.25rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  color: #808080;
 }
 
 .task-value {
   padding-left: 1rem;
   padding-top: 0.5rem;
   font-size: 1.3rem;
+  /* overflow: auto; */
+  word-break: break-all;
   font-family: Arial, Helvetica, sans-serif;
 }
 
